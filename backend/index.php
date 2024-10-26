@@ -1,12 +1,19 @@
 <?php
     require __DIR__ . '/vendor/autoload.php';
+    use Palmo\Source\Db;
     session_start();
 
-    // Перевірка, чи користувач вже авторизований
-    if(isset($_SESSION['user_id'])) {
-        header("Location: scripts/dashboard.php");
-        exit();
+    $isLoggedIn = false;
+    $isAdmin = false;
+    $userName = "";
+
+    if(isset($_SESSION['userLoggedIn'])) {
+        $isLoggedIn = true;
+        $userName = $_SESSION['userName'];
+        $isAdmin = $_SESSION['isAdmin'];
     }
+    $_SESSION['currentDir'] = basename(__DIR__);
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -16,9 +23,8 @@
     <base href="/">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="./favicon.ico">
-    <link rel="canonical" href="https://getbootstrap.com/docs/5.1/examples/checkout/">
-    <!-- Bootstrap core CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>Explore Space</title>
 
     <style>
         .bd-placeholder-img {
@@ -29,7 +35,7 @@
             user-select: none;
         }
 
-        @media (min-width: 768px) {
+        @media (min-width: 850px) {
             .bd-placeholder-img-lg {
                 font-size: 3.5rem;
             }
@@ -41,24 +47,23 @@
     <link href="css/form-validation.css" rel="stylesheet">
 </head>
 <body>
-<h2>Вхід</h2>
-
 <?php
 // Вивід помилок
 if(isset($_SESSION['error'])) {
     $error = $_SESSION['error'];
     echo "<p style='color:red;'>$error</p>";
 }
+require __DIR__ . '/spaceScripts/header.php';
 ?>
 
-<form method="POST" action="scripts/main.php">
-    <label for="username">Логін:</label>
-    <input type="text" id="username" name="username" required><br>
+<main class="container mt-4">
+    <div id="app-content">
+        <?php
+        require __DIR__ . '/spaceScripts/homePage.php';
+        ?>
+    </div>
+</main>
 
-    <label for="password">Пароль:</label>
-    <input type="password" id="password" name="password" required><br>
 
-    <input type="submit" value="Увійти">
-</form>
 </body>
 </html>

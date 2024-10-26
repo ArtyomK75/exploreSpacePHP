@@ -1,4 +1,4 @@
-FROM php:8.0-fpm-buster
+FROM php:8.3-fpm
 LABEL maintainer="palmo<palmo@palmo-HP-Laptop-15s-eq1xxx>"
 SHELL ["/bin/bash", "-oeux", "pipefail", "-c"]
 
