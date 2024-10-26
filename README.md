@@ -1,4 +1,4 @@
-# PHP-Beginning
+# PHP learning project "Explore space"
 
 ## Project setup
 ```
